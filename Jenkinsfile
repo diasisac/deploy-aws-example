@@ -17,7 +17,7 @@ pipeline {
    stage('Build project image') {
     steps {
       script {
-        dockerapp = docker.build("isacdias/deploy-aws:${env.BUILD_ID}", "-f ./Dockerfile ./")
+        dockerapp = docker.build("isacdias/deploy-aws-example-example:${env.BUILD_ID}", "-f ./Dockerfile ./")
       }
     }
    }
@@ -25,9 +25,9 @@ pipeline {
    stage('Remove container if exists') {
     steps {
       sh '''
-            if [ $( docker ps -a -f name=deploy-aws | wc -l ) -eq 2 ]; then
-              docker stop deploy-aws
-              docker rm deploy-aws
+            if [ $( docker ps -a -f name=deploy-aws-example | wc -l ) -eq 2 ]; then
+              docker stop deploy-aws-example
+              docker rm deploy-aws-example
             
             fi
       '''
@@ -37,7 +37,7 @@ pipeline {
    stage('Deploy image') {
     steps { 
       sh """
-          docker run --name deploy-aws --env-file /etc/curso/env -p 3000:3000 -d -t danieleleaoe/deploy-aws:${env.BUILD_ID}
+          docker run --name deploy-aws-example --env-file /etc/curso/env -p 3000:3000 -d -t danieleleaoe/deploy-aws-example:${env.BUILD_ID}
       """
     }
    }
