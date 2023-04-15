@@ -17,7 +17,7 @@ pipeline {
    stage('Build project image') {
     steps {
       script {
-        dockerapp = docker.build("danieleleaoe/deploy-aws:${env.BUILD_ID}", "-f ./Dockerfile ./")
+        dockerapp = docker.build("isacdias/deploy-aws:${env.BUILD_ID}", "-f ./Dockerfile ./")
       }
     }
    }
